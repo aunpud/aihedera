@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAI - AI Powered by Hedera</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background: radial-gradient(circle, #2b2b2b, #1a1a1a);
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #0abb92, #4b99f7);
+            color: #fff;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+            }
+        }
+
+        .intro {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.8em;
+            line-height: 1.8em;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1));
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .coming-soon {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #4b99f7;
+            text-shadow: 0 0 20px #4b99f7, 0 0 40px #0abb92;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .code-editor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 20px;
+        }
+
+        textarea {
+            width: 80%;
+            height: 250px;
+            background: #111;
+            color: #0aff88;
+            border: 2px solid #4b99f7;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.2em;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.8);
+            resize: none;
+        }
+
+        button {
+            margin: 20px;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(to right, #0abb92, #4b99f7);
+            border: none;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.8);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #0a9b82, #3a89d7);
+            transform: scale(1.05);
+        }
+
+        .terminal {
+            width: 80%;
+            height: 250px;
+            background: #000;
+            color: #0abb92;
+            padding: 15px;
+            margin-top: 20px;
+            overflow-y: auto;
+            font-size: 1em;
+            border-radius: 10px;
+            border: 2px solid #4b99f7;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .terminal p {
+            margin: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+            font-size: 1em;
+            background: #1a1a1a;
+            margin-top: 50px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        HAI - AI Powered by Hedera
+    </header>
+
+    <div class="intro">
+        <p>Explore the synergy of AI and blockchain technology with HAI, the innovative meme coin powered by Hedera.</p>
+        <p>Unleashing AI potential on a decentralized ledger. Stay tuned for something revolutionary!</p>
+    </div>
+
+    <div class="coming-soon">Coming Soon...</div>
+
+    <div class="code-editor">
+        <textarea placeholder="Type something cool..."></textarea>
+        <button onclick="runCode()">Run Code</button>
+        <div class="terminal" id="terminal">
+            <p>Welcome to the HAI coding panel. Type your magic!</p>
+        </div>
+    </div>
+
+    <footer>
+        Powered by Hedera | Innovating with AI. © 2024 HAI Project.
+    </footer>
+
+    <script>
+        function runCode() {
+            const code = document.querySelector('textarea').value;
+            const terminal = document.getElementById('terminal');
+            try {
+                const result = eval(code);
+                terminal.innerHTML += `<p>> ${result}</p>`;
+            } catch (error) {
+                terminal.innerHTML += `<p style="color: red;">Error: ${error}</p>`;
+            }
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+    </script>
+</body>
+</html>
