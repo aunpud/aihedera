@@ -3,105 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gold Hedera NFT - Launching Soon">
-    <meta name="keywords" content="Gold Hedera NFT, Hedera Hashgraph, NFT Marketplace, Coming Soon">
-    <meta name="author" content="Your Name or Team">
-    <title>Gold Hedera NFT - Coming Soon</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Memeverse Marketplace</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            font-family: 'Comic Sans MS', sans-serif;
+            background: linear-gradient(to bottom, #ff4d00, #ffc800);
             color: white;
-            text-align: center;
+            overflow-x: hidden;
+        }
+        .hero {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
-            overflow: hidden;
-        }
-
-        header {
-            position: absolute;
-            top: 20px;
-            width: 100%;
+            background: url('https://source.unsplash.com/1600x900/?funny,meme') no-repeat center/cover;
             text-align: center;
         }
-
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin: 0;
+        .hero img {
+            width: 300px;
+            height: auto;
+            margin-bottom: 20px;
         }
-
-        section {
-            padding: 20px;
-        }
-
-        .coming-soon {
+        .hero h1 {
             font-size: 4rem;
-            font-weight: 600;
-            animation: pulse 1.5s infinite;
+            margin: 0.5em 0;
+            animation: popIn 2s;
         }
-
-        .info {
-            font-size: 1.2rem;
-            font-weight: 300;
-            margin-top: 10px;
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 1em;
         }
-
-        footer {
-            position: absolute;
-            bottom: 20px;
-            font-size: 0.9rem;
-            opacity: 0.8;
+        .cta {
+            margin-top: 1em;
         }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        .btn {
-            background-color: white;
-            color: #ff8c00;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 600;
+        .cta input[type="email"] {
+            padding: 0.8em;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            margin-top: 20px;
+            width: 300px;
+            max-width: 90%;
+            font-size: 1rem;
         }
-
-        .btn:hover {
-            background-color: #ffd700;
+        .cta button {
+            padding: 0.8em 1.5em;
+            border: none;
+            background: white;
+            color: #ff4d00;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .cta button:hover {
+            background: #ff9800;
             color: white;
+        }
+        @keyframes popIn {
+            from {transform: scale(0.8); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+        .features {
+            padding: 3em;
+            text-align: center;
+            background: #ff8000;
+        }
+        .features h2 {
+            margin-bottom: 1em;
+            font-size: 3rem;
+        }
+        .features .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2em;
+        }
+        .features .card {
+            padding: 2em;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+            color: white;
+        }
+        .features .card:hover {
+            transform: translateY(-10px);
+        }
+        .features .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5em;
+        }
+        .roadmap {
+            padding: 3em;
+            background: #ff6f00;
+            text-align: center;
+        }
+        .roadmap h2 {
+            font-size: 3rem;
+        }
+        .roadmap .timeline {
+            margin-top: 2em;
+            list-style: none;
+            padding: 0;
+        }
+        .roadmap .timeline li {
+            margin: 1.5em 0;
+            position: relative;
+            padding-left: 2.5em;
+        }
+        .roadmap .timeline li:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            width: 1.5em;
+            height: 1.5em;
+            background: white;
+            border-radius: 50%;
+        }
+        .footer {
+            padding: 2em;
+            text-align: center;
+            background: #ff4d00;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1.5em;
+        }
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Gold Hedera NFT</h1>
-    </header>
-
-    <section>
-        <div class="coming-soon">Coming Soon</div>
-        <p class="info">Launching a unique NFT collection powered by Hedera Hashgraph. Stay tuned for exclusive rewards and features!</p>
-        <a href="#" class="btn">Notify Me</a>
+    <section class="hero">
+        <h1>Memeverse Marketplace</h1>
+        <p>The ultimate platform to buy, sell, and trade your favorite memes on the Hedera network.</p>
+        <div class="cta">
+            <input type="email" placeholder="Enter your email for notifications">
+            <button onclick="alert('Thanks for signing up! Stay tuned for meme madness!')">Notify Me</button>
+            <br>
+            <br>
+            <a id="buy-now" href="https://www.google.com" target="_blank">Buy Now</a>
+        </div>
     </section>
 
-    <footer>
-        <p>&copy; 2024 Gold Hedera NFT. All Rights Reserved. Connect with us on <a href="#" style="color: white; text-decoration: underline;">Twitter</a> and <a href="#" style="color: white; text-decoration: underline;">Discord</a>.</p>
+    <section class="features">
+        <h2>Why Memeverse?</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Decentralized Humor</h3>
+                <p>Powered by Hedera, bringing security and transparency to the meme economy.</p>
+            </div>
+            <div class="card">
+                <h3>Marketplace for Creativity</h3>
+                <p>Trade the funniest, most viral memes and support your favorite creators.</p>
+            </div>
+            <div class="card">
+                <h3>Eco-Friendly</h3>
+                <p>Leveraging Hedera’s energy-efficient network for guilt-free meme trading.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="roadmap">
+        <h2>Roadmap</h2>
+        <ul class="timeline">
+            <li>Phase 1: Conceptualization & Team Formation (2023)</li>
+            <li>Phase 2: Testnet Marketplace Launch (Q1 2024)</li>
+            <li>Phase 3: Full Marketplace Release with NFT Support (Q2 2024)</li>
+            <li>Phase 4: Meme Awards & Community Events (Q3 2024)</li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+        <p>© 2024 Memeverse Marketplace. All Rights Reserved.</p>
+        <a href="#">Twitter</a>
+        <a href="#">Discord</a>
+        <a href="#">Telegram</a>
     </footer>
 </body>
 </html>
