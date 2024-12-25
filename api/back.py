@@ -7,7 +7,7 @@ import os
 waitlist = []
 
 # File path for CSV (optional, for external storage in Vercel environment)
-csv_file = "/mnt/data/waitlist.csv"
+csv_file = "/Users/aunpud/Desktop/meme/waitlist.csv"
 
 def handler(request):
     # Ensure the method is POST
