@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hedera Waitlist</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #0f0;
+      font-family: "Courier New", Courier, monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .coming-soon {
+      background: #111;
+      padding: 20px;
+      border: 2px solid #0f0;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      text-align: center;
+      max-width: 600px;
+    }
+    .progress-container {
+      background: #222;
+      border: 1px solid #0f0;
+      height: 20px;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px auto;
+      position: relative;
+    }
+    .progress-bar {
+      background: lime;
+      height: 100%;
+      width: 0%;
+      transition: width 0.5s ease-in-out;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 300px;
+    }
+    input, button, a {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #0f0;
+      background: #000;
+      color: #0f0;
+      font-family: "Courier New", Courier, monospace;
+      text-align: center;
+    }
+    button, a {
+      cursor: pointer;
+    }
+    button:hover, a:hover {
+      background: #0f0;
+      color: #000;
+    }
+    a {
+      text-decoration: none;
+    }
+    .game-container {
+      margin-top: 50px;
+      border: 2px solid #0f0;
+      width: 300px;
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+    .circle {
+      width: 30px;
+      height: 30px;
+      background: lime;
+      border-radius: 50%;
+      position: absolute;
+      cursor: pointer;
+    }
+    .game-info {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Our Project</h1>
+  
+  <!-- Coming Soon Section -->
+  <div class="coming-soon">
+    <h2>Coming Soon!</h2>
+    <p>
+      Imagine creating stunning, one-of-a-kind artwork powered by the most advanced AI tools in just one step. 
+      Our platform is here to revolutionize the way you interact with art and blockchain technology.
+    </p>
+    <p>
+      Here's what we're building:
+    </p>
+    <ul>
+      <li>🖌️ <b>AI Art Creation:</b> Generate unique artwork using AI tools like ChatGPT for creative prompts, DALL-E for visuals, and more.</li>
+      <li>🎨 <b>Custom Art Engine:</b> Edit and refine your AI-generated art with intuitive tools.</li>
+      <li>🖼️ <b>Instant NFT Minting:</b> Mint your artwork directly into your Hedera wallet in one seamless step.</li>
+      <li>🌐 <b>Decentralized Storage:</b> Store your art securely on IPFS and showcase your creativity globally.</li>
+    </ul>
+    <p>
+    <p>
+      Be part of the future. Join our waitlist and stay updated on the launch!
+    </p>
+    <!-- Progress Bar Section -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar" style="width: 10%;"></div>
+    </div>
+    <p id="progress-text">10 people have joined. 90 more to go!</p>
+  </div>
+
+  <!-- Waitlist Form -->
+  <h2>Join the Waitlist</h2>
+  <form id="waitlist-form">
+    <input type="text" id="wallet" placeholder="Wallet Address (e.g., 0.0.1234)" required>
+    <input type="email" id="email" placeholder="Email Address" required>
+    <button type="submit">Join Waitlist</button>
+  </form>
+  <div class="message" id="message"></div>
+
+  <!-- Mini-Game -->
+  <div class="game-container" id="game-container">
+    <!-- The game circles will appear here -->
+  </div>
+  <div class="game-info">
+    <p>Score: <span id="score">0</span></p>
+    <p>Time Left: <span id="time-left">30</span>s</p>
+    <button id="start-game">Start Game</button>
+  </div>
+
+  <script>
+    // Progress Bar and Tracker
+    const goal = 100; // Goal for launch
+    const progressBar = document.getElementById("progress-bar");
+    const progressText = document.getElementById("progress-text");
+    const messageDiv = document.getElementById("message");
+
+    // Get totalSignups from localStorage or initialize to 10
+    let totalSignups = parseInt(localStorage.getItem("totalSignups")) || 10;
+
+    function updateProgress() {
+      const percentage = (totalSignups / goal) * 100;
+      progressBar.style.width = `${percentage}%`;
+      progressText.textContent = `${totalSignups} people have joined. ${goal - totalSignups} more to go!`;
+    }
+
+    // Increment progress when someone joins
+    const form = document.getElementById("waitlist-form");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const wallet = document.getElementById("wallet").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      try {
+        const response = await fetch('/join-waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ wallet, email }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          totalSignups++;
+          localStorage.setItem("totalSignups", totalSignups); // Save to localStorage
+          updateProgress();
+          messageDiv.textContent = data.message;
+          messageDiv.style.color = 'lime';
+        } else {
+          messageDiv.textContent = data.error;
+          messageDiv.style.color = 'red';
+        }
+      } catch (error) {
+        messageDiv.textContent = 'An error occurred. Please try again.';
+        messageDiv.style.color = 'red';
+      }
+    });
+
+    // Initialize progress bar
+    updateProgress();
+
+    // Mini-Game Functionality
+    const gameContainer = document.getElementById("game-container");
+    const scoreSpan = document.getElementById("score");
+    const timeLeftSpan = document.getElementById("time-left");
+    const startGameButton = document.getElementById("start-game");
+
+    let score = 0;
+    let timeLeft = 30;
+    let gameInterval;
+    let timerInterval;
+
+    function startGame() {
+      score = 0;
+      timeLeft = 30;
+      scoreSpan.textContent = score;
+      timeLeftSpan.textContent = timeLeft;
+      startGameButton.disabled = true;
+
+      gameInterval = setInterval(createCircle, 1000);
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function createCircle() {
+      const circle = document.createElement('div');
+      circle.classList.add('circle');
+
+      // Random position
+      const x = Math.random() * (gameContainer.offsetWidth - 30);
+      const y = Math.random() * (gameContainer.offsetHeight - 30);
+      circle.style.left = `${x}px`;
+      circle.style.top = `${y}px`;
+
+      circle.addEventListener('click', () => {
+        score++;
+        scoreSpan.textContent = score;
+        gameContainer.removeChild(circle);
+      });
+
+      gameContainer.appendChild(circle);
+
+      // Remove circle after 2 seconds if not clicked
+      setTimeout(() => {
+        if (gameContainer.contains(circle)) {
+          gameContainer.removeChild(circle);
+        }
+      }, 2000);
+    }
+
+    function updateTimer() {
+      timeLeft--;
+      timeLeftSpan.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(gameInterval);
+        clearInterval(timerInterval);
+        startGameButton.disabled = false;
+        alert(`Game Over! Your score: ${score}`);
+      }
+    }
+
+    startGameButton.addEventListener('click', startGame);
+  </script>
+</body>
+</html>
