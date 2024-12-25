@@ -1,47 +1,33 @@
-from flask import jsonify, request
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import re
-import csv
-import os
 
-# In-memory waitlist database
-waitlist = []
+app = Flask(__name__)
+CORS(app)
 
-# File path for CSV (optional, for external storage in Vercel environment)
-csv_file = "/Users/aunpud/Desktop/meme/waitlist.csv"
+# Global variable for total signups (server-side storage)
+total_signups = 10  # Starting value for progress bar
 
-def handler(request):
-    # Ensure the method is POST
-    if request.method != "POST":
-        return jsonify({"error": "Method not allowed"}), 405
+@app.route("/join-waitlist", methods=["POST"])
+def join_waitlist():
+    global total_signups
+    data = request.json
+    wallet = data.get("wallet")
+    email = data.get("email")
 
-    try:
-        # Parse JSON data from the request
-        data = request.json
-        wallet = data.get("wallet")
-        email = data.get("email")
+    # Validate wallet and email
+    if not re.match(r"^0\.0\.\d+$", wallet):
+        return jsonify({"error": "Invalid wallet address"}), 400
+    if not re.match(r"^[^@]+@[^@]+\.[^@]+$", email):
+        return jsonify({"error": "Invalid email address"}), 400
 
-        # Validation
-        if not wallet or not re.match(r"^0\.0\.\d+$", wallet):
-            return jsonify({"error": "Invalid wallet address format."}), 400
-        if not email or not re.match(r"^[^@]+@[^@]+\.[^@]+$", email):
-            return jsonify({"error": "Invalid email address."}), 400
+    # Increment total signups
+    total_signups += 1
 
-        # Add entry to the in-memory database
-        waitlist.append({"wallet": wallet, "email": email})
+    return jsonify({
+        "message": "Successfully joined the waitlist!",
+        "totalSignups": total_signups
+    })
 
-        # Save to CSV file
-        try:
-            # Ensure CSV directory exists (especially in Vercel's ephemeral file system)
-            os.makedirs(os.path.dirname(csv_file), exist_ok=True)
-
-            with open(csv_file, "a", newline="") as f:
-                writer = csv.writer(f)
-                writer.writerow([wallet, email])
-        except Exception as e:
-            return jsonify({"error": f"Failed to write to CSV: {str(e)}"}), 500
-
-        return jsonify({"message": "Successfully joined the waitlist!"}), 200
-
-    except Exception as e:
-        # Handle unexpected errors
-        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+if __name__ == "__main__":
+    app.run(debug=True)
